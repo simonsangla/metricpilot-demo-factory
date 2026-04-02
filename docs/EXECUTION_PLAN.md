@@ -55,7 +55,7 @@ Raw Kaggle CSV
 [Narrative Interpreter] — deterministic template, no LLM
   |
   v
-[UI] — BLOCKED until engine is proven
+[UI] — unlocked after analytical, adapter, and narrative gates are green
 ```
 
 ---
@@ -75,16 +75,69 @@ Raw Kaggle CSV
 **Gate:** All unit tests green for: schema_validator, trend_decomposer, concern_classifier, segment_scanner.
 
 ### Phase 4 — Integration Validation
-**Gate:** Full-chain integration tests pass (fixture → validator → decomposer → classifier → scanner → narrative). This gate unlocks UI and adapter work.
+**Gate:** Full-chain analytical integration tests pass (fixture → validator → decomposer → classifier → scanner). This gate unlocks Phase 5 and Phase 6 work. UI remains blocked until later gates are satisfied.
 
 ### Phase 5 — Club Med Adapter
 **Gate:** Adapter output passes schema_validator. No Kaggle column names leak into app code.
 
 ### Phase 6 — Narrative Interpreter
-**Gate:** Template narrative passes banned-phrase test. Output conforms to NarrativeOutput schema.
+**Gate:** Template narrative passes banned-phrase test, output conforms to NarrativeOutput schema, and concern-level outputs reflect the analytical classification without causal wording.
 
-### Phase 7 — UI (BLOCKED)
-**Gate:** Phase 4 fully green. Not before.
+### Phase 7 — UI
+**Gate:** Phase 4, Phase 5, and Phase 6 are green. This gate is now satisfied.
+
+## 4A. Phase 7 UI Shell Decision
+
+### Chosen shell
+`Streamlit`
+
+### Why Streamlit fits the current repo
+- Lowest implementation overhead for a compact local diagnostic workflow.
+- Maps directly onto the verified pipeline: load canonical tables, run analytical chain, render deterministic narrative.
+- Supports fast local iteration without adding frontend build tooling, routing, or API glue.
+- Keeps Phase 7 aligned with the repo's current single-user, local-run validation posture.
+
+### Rejected alternatives
+- `Gradio`
+  - Better fit for prompt/demo interaction patterns than for a compact diagnostic dashboard with multiple structured outputs.
+  - Adds less value than Streamlit for table-and-chart-heavy local inspection.
+- `custom`
+  - Requires unnecessary frontend/framework decisions, asset structure, and request wiring for the current scope.
+  - Expands maintenance burden and implementation surface beyond the minimal Phase 7 goal.
+
+### Constraint fit
+- Preserves HC-1 and HC-2 by presenting only Club Med and `repeat_guest_rate`.
+- Preserves HC-3 by requiring both global and per-segment outputs in one run.
+- Preserves HC-5 by rendering existing scanner output directly, with no separate driver table.
+- Preserves HC-7 by reusing the deterministic narrative layer and avoiding causal copy.
+- Preserves HC-8 by consuming canonical adapter outputs only.
+- Preserves HC-10 by building on already validated contracts, analytics, adapter, and narrative layers.
+
+### Minimal T7.2 workflow outline
+1. Load `hotel_bookings.csv` through the validated Club Med adapter.
+2. Run schema validation on the canonical outputs and stop with deterministic errors if validation fails.
+3. Run the analytical chain on the global KPI series and per-segment scanner output.
+4. Render a compact local page with:
+   - demo metadata header
+   - global KPI classification summary
+   - ranked segment table
+   - deterministic narrative output
+   - compact plots or tables for the global series only, if needed for readability
+
+### Acceptance criteria for T7.2
+- App starts locally with `streamlit run src/metricpilot/streamlit_app.py`.
+- App loads the Club Med proxy dataset through the existing adapter path.
+- App shows one diagnostic workflow for `repeat_guest_rate` only.
+- App renders global classification, ranked segment output, and deterministic narrative in one run.
+- App does not introduce new storage, auth, persistence, or deployment requirements.
+- App copy contains no banned causal phrasing.
+
+### Non-goals for Phase 7
+- No deployment target selection.
+- No authentication or multi-user support.
+- No persistence layer or saved analyses.
+- No styling system, design system migration, or multi-page app structure.
+- No new KPIs, verticals, or recommendation engine behavior.
 
 ---
 
@@ -214,10 +267,10 @@ Cut in this order (top = first to cut):
 
 ## 10. Current Status
 
-**Active phase:** Phase 0
-**Last completed task:** — (none)
+**Active phase:** Phase 7
+**Last completed task:** T6.2
 **Last updated:** 2026-04-02
-**Blocked items:** Phase 7 (UI)
+**Blocked items:** —
 
 ---
 
