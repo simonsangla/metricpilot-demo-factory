@@ -1,0 +1,2 @@
+demo_id,demo_label,target_account,target_vertical,scenario_label,primary_metric,public_data_source,disclaimer_text,default_dimension_name
+clubmed_repeat_guest_proxy_v1,Club Med proxy — Repeat guest rate,Club Med,travel_hospitality,Repeat guest rate deterioration,repeat_guest_rate,Kaggle Hotel Booking Demand,"Public proxy dataset. Illustrative diagnostic workflow, not Club Med internal data.",market_segment

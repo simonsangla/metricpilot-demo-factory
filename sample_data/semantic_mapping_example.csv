@@ -1,0 +1,5 @@
+field_type,raw_key,display_label,business_definition,llm_hint,sort_order,is_active
+metric,repeat_guest_rate,Repeat guest rate,Share of bookings associated with repeated guests,"Interpret as loyalty/returning customer signal, not customer lifetime value.",1,True
+dimension,market_segment,Market segment,Booking/acquisition segment,Use for segment contribution ranking.,1,True
+dimension_value,Online TA,Online travel agency,Third-party online travel intermediaries,"If deterioration concentrates here, mention channel mix or segment quality shift.",2,True
+dimension_value,Direct,Direct,Direct booking channel,Contrast with intermediary-driven performance.,3,True

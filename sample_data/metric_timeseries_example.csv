@@ -1,0 +1,6 @@
+demo_id,date_day,metric_name,metric_value,dimension_name,dimension_value,slice_level,obs_count,metric_numerator,metric_denominator
+clubmed_repeat_guest_proxy_v1,2025-01-01,repeat_guest_rate,0.22,all,all,global,500,110,500
+clubmed_repeat_guest_proxy_v1,2025-01-01,repeat_guest_rate,0.28,hotel,Resort Hotel,segment,300,84,300
+clubmed_repeat_guest_proxy_v1,2025-01-01,repeat_guest_rate,0.13,hotel,City Hotel,segment,200,26,200
+clubmed_repeat_guest_proxy_v1,2025-01-01,repeat_guest_rate,0.3,market_segment,Direct,segment,180,54,180
+clubmed_repeat_guest_proxy_v1,2025-01-01,repeat_guest_rate,0.18,market_segment,Online TA,segment,220,40,220
