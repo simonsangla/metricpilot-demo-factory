@@ -20,8 +20,8 @@
 
 | ID | Task | Status | Depends On | Acceptance Criteria |
 |----|------|--------|------------|---------------------|
-| T0.1 | Create `pyproject.toml` with pinned deps: `pandas>=2.0`, `statsmodels>=0.14`, `ruptures>=1.1`, `scipy>=1.11`, `pytest>=7.0`. Use `src` layout. | TODO | — | `pip install -e .` succeeds |
-| T0.2 | Create package skeleton: `src/metricpilot/__init__.py`, empty module stubs (`contracts.py`, `fixtures.py`, `schema_validator.py`, `trend_decomposer.py`, `concern_classifier.py`, `segment_scanner.py`, `narrative_contract.py`), `tests/conftest.py`, `tests/test_*.py` stubs | TODO | T0.1 | `python -c "import metricpilot"` succeeds |
+| T0.1 | Create `pyproject.toml` with pinned deps: `pandas>=2.0`, `statsmodels>=0.14`, `ruptures>=1.1`, `scipy>=1.11`, `pytest>=7.0`. Use `src` layout. | DONE | — | `pip install -e .` succeeds |
+| T0.2 | Create package skeleton: `src/metricpilot/__init__.py`, empty module stubs (`contracts.py`, `fixtures.py`, `schema_validator.py`, `trend_decomposer.py`, `concern_classifier.py`, `segment_scanner.py`, `narrative_contract.py`), `tests/conftest.py`, `tests/test_*.py` stubs | DONE | T0.1 | `python -c "import metricpilot"` succeeds |
 
 **Phase 0 gate:** `pip install -e .` + `import metricpilot` both succeed.
 
@@ -31,15 +31,15 @@
 
 | ID | Task | Status | Depends On | Acceptance Criteria |
 |----|------|--------|------------|---------------------|
-| T1.1 | Implement `contracts.py`: `MetricTimeseriesRow`, `DemoRegistryRow`, `SemanticMappingRow` dataclasses matching CANONICAL_SCHEMA.md | TODO | T0.2 | Dataclasses importable, fields match schema |
-| T1.2 | Add `ConcernLevel` enum (`NOT_CONCERNING`, `WATCH`, `CONCERNING`) to contracts | TODO | T1.1 | Enum importable |
-| T1.3 | Add `DecompositionResult` dataclass (trend, seasonal, residual, observed) | TODO | T1.1 | Dataclass importable |
-| T1.4 | Add `ClassificationResult` dataclass (level, slope, slope_ci, change_points, evidence_text) | TODO | T1.2 | Dataclass importable |
-| T1.5 | Add `SegmentContribution` dataclass (dimension_name, dimension_value, contribution_delta, obs_count, slope) | TODO | T1.1 | Dataclass importable |
-| T1.6 | Add `NarrativeOutput` dataclass (finding, confidence, business_meaning, caveats) | TODO | T1.1 | Dataclass importable |
-| T1.7 | Add `AnalysisSummary` dataclass — engine output contract linking ClassificationResult + list[SegmentContribution] | TODO | T1.4, T1.5 | Dataclass importable |
-| T1.8 | Add `ALLOWED_DIMENSIONS` frozen list: `all`, `hotel`, `market_segment`, `distribution_channel`, `customer_type`, `deposit_type`, `country_top` | TODO | T1.1 | Constant importable, is a frozenset or tuple |
-| T1.9 | Add `ValidationResult` dataclass (ok: bool, errors: list[str]) | TODO | T1.1 | Dataclass importable |
+| T1.1 | Implement `contracts.py`: `MetricTimeseriesRow`, `DemoRegistryRow`, `SemanticMappingRow` dataclasses matching CANONICAL_SCHEMA.md | DONE | T0.2 | Dataclasses importable, fields match schema |
+| T1.2 | Add `ConcernLevel` enum (`NOT_CONCERNING`, `WATCH`, `CONCERNING`) to contracts | DONE | T1.1 | Enum importable |
+| T1.3 | Add `DecompositionResult` dataclass (trend, seasonal, residual, observed) | DONE | T1.1 | Dataclass importable |
+| T1.4 | Add `ClassificationResult` dataclass (level, slope, slope_ci, change_points, evidence_text) | DONE | T1.2 | Dataclass importable |
+| T1.5 | Add `SegmentContribution` dataclass (dimension_name, dimension_value, contribution_delta, obs_count, slope) | DONE | T1.1 | Dataclass importable |
+| T1.6 | Add `NarrativeOutput` dataclass (finding, confidence, business_meaning, caveats) | DONE | T1.1 | Dataclass importable |
+| T1.7 | Add `AnalysisSummary` dataclass — engine output contract linking ClassificationResult + list[SegmentContribution] | DONE | T1.4, T1.5 | Dataclass importable |
+| T1.8 | Add `ALLOWED_DIMENSIONS` frozen list: `all`, `hotel`, `market_segment`, `distribution_channel`, `customer_type`, `deposit_type`, `country_top` | DONE | T1.1 | Constant importable, is a frozenset or tuple |
+| T1.9 | Add `ValidationResult` dataclass (ok: bool, errors: list[str]) | DONE | T1.1 | Dataclass importable |
 
 **Phase 1 gate:** All contracts importable. `python -c "from metricpilot.contracts import *"` succeeds. No logic, pure types.
 
@@ -49,11 +49,11 @@
 
 | ID | Task | Status | Depends On | Acceptance Criteria |
 |----|------|--------|------------|---------------------|
-| T2.1 | Implement `stable_series()` fixture: 180 days, daily grain, global + 3 dimensions x 2-3 values, flat trend + noise, `obs_count >= 50` | TODO | T1.* | Returns DataFrame, columns match schema, 180 unique dates |
-| T2.2 | Implement `structural_decline()` fixture: 180 days, steady negative slope across all segments | TODO | T2.1 | Returns DataFrame, clear negative trend visible |
-| T2.3 | Implement `segment_shift()` fixture: 180 days, global dip driven by 1-2 segments declining, others stable | TODO | T2.1 | Returns DataFrame, identifiable segment-driven deterioration |
-| T2.4 | Implement `temporary_dip()` fixture: 180 days, one-time dip with recovery | TODO | T2.1 | Returns DataFrame, dip visible but trend recovers |
-| T2.5 | Add `demo_registry_fixture()` and `semantic_mapping_fixture()` returning conformant DataFrames | TODO | T1.* | Returns DataFrames matching schema |
+| T2.1 | Implement `stable_series()` fixture: 180 days, daily grain, global + 3 dimensions x 2-3 values, flat trend + noise, `obs_count >= 50` | DONE | T1.* | Returns DataFrame, columns match schema, 180 unique dates |
+| T2.2 | Implement `structural_decline()` fixture: 180 days, steady negative slope across all segments | DONE | T2.1 | Returns DataFrame, clear negative trend visible |
+| T2.3 | Implement `segment_shift()` fixture: 180 days, global dip driven by 1-2 segments declining, others stable | DONE | T2.1 | Returns DataFrame, identifiable segment-driven deterioration |
+| T2.4 | Implement `temporary_dip()` fixture: 180 days, one-time dip with recovery | DONE | T2.1 | Returns DataFrame, dip visible but trend recovers |
+| T2.5 | Add `demo_registry_fixture()` and `semantic_mapping_fixture()` returning conformant DataFrames | DONE | T1.* | Returns DataFrames matching schema |
 
 **Phase 2 gate:** All 4 time-series fixtures + metadata fixtures pass schema_validator (validated in Phase 3).
 
@@ -129,15 +129,15 @@
 
 | Phase | Total Tasks | Done | Remaining | Status |
 |-------|-------------|------|-----------|--------|
-| 0 — Skeleton | 2 | 0 | 2 | TODO |
-| 1 — Contracts | 9 | 0 | 9 | TODO |
-| 2 — Fixtures | 5 | 0 | 5 | TODO |
+| 0 — Skeleton | 2 | 2 | 0 | DONE |
+| 1 — Contracts | 9 | 9 | 0 | DONE |
+| 2 — Fixtures | 5 | 5 | 0 | DONE |
 | 3 — Analytics | 8 | 0 | 8 | TODO |
 | 4 — Integration | 5 | 0 | 5 | TODO |
 | 5 — Adapter | 6 | 0 | 6 | TODO |
 | 6 — Narrative | 2 | 0 | 2 | TODO |
 | 7 — UI | 2 | 0 | 2 | BLOCKED |
-| **Total** | **39** | **0** | **39** | |
+| **Total** | **39** | **16** | **23** | |
 
 ---
 
