@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools==75.8.2", "wheel==0.45.1"]
+requires = ["setuptools==78.1.1", "wheel==0.46.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
   "pandas==2.2.3",
-  "pytest==8.3.5",
+  "pytest==9.0.3",
   "ruptures==1.1.9",
   "scipy==1.15.2",
   "statsmodels==0.14.4",
